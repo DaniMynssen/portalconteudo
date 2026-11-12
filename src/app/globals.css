@@ -1,26 +1,258 @@
 @import "tailwindcss";
 
+/* ============================================================
+   Tokens — paleta viva e chapada, cantos bem arredondados
+   ============================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f7f7f7;
+  --border: #e5e5e5;
+  --border-strong: #d4d4d4;
+  --text: #3c3c3c;
+  --text-muted: #8a8a8a;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --green: #45c206;
+  --green-dark: #36a000;
+  --green-soft: #e8f8dc;
+  --blue: #1cb0f6;
+  --blue-dark: #1289c4;
+  --blue-soft: #ddf4ff;
+  --purple: #a463f2;
+  --purple-dark: #7f43c9;
+  --purple-soft: #f1e6ff;
+  --orange: #ff9600;
+  --orange-dark: #d27a00;
+  --orange-soft: #fff0d9;
+  --pink: #ff5aa5;
+  --pink-dark: #d23c84;
+  --pink-soft: #ffe3f0;
+  --yellow: #ffc800;
+  --yellow-dark: #d9a800;
+  --yellow-soft: #fff6d1;
+  --red: #ff4b4b;
+  --red-dark: #d43333;
+  --red-soft: #ffe1e1;
+  --gray: #afafaf;
+  --gray-dark: #8f8f8f;
+  --gray-soft: #f0f0f0;
+
+  --youtube: #ff3b3b;
+  --instagram: #e1306c;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #131f24;
+    --surface: #1a2a31;
+    --surface-2: #20333b;
+    --border: #37464f;
+    --border-strong: #4b5a63;
+    --text: #f1f7fb;
+    --text-muted: #94a3ad;
+
+    --green-soft: #1f3a1a;
+    --blue-soft: #143446;
+    --purple-soft: #2e2346;
+    --orange-soft: #3d2d14;
+    --pink-soft: #3e1f2f;
+    --yellow-soft: #3b3313;
+    --red-soft: #3f1d1d;
+    --gray-soft: #26363e;
+    --gray: #52656f;
+    --gray-dark: #3c4c55;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--text);
+  --color-muted: var(--text-muted);
+
+  --color-green: var(--green);
+  --color-green-dark: var(--green-dark);
+  --color-green-soft: var(--green-soft);
+  --color-blue: var(--blue);
+  --color-blue-dark: var(--blue-dark);
+  --color-blue-soft: var(--blue-soft);
+  --color-purple: var(--purple);
+  --color-purple-dark: var(--purple-dark);
+  --color-purple-soft: var(--purple-soft);
+  --color-orange: var(--orange);
+  --color-orange-dark: var(--orange-dark);
+  --color-orange-soft: var(--orange-soft);
+  --color-pink: var(--pink);
+  --color-pink-dark: var(--pink-dark);
+  --color-pink-soft: var(--pink-soft);
+  --color-yellow: var(--yellow);
+  --color-yellow-dark: var(--yellow-dark);
+  --color-yellow-soft: var(--yellow-soft);
+  --color-red: var(--red);
+  --color-red-dark: var(--red-dark);
+  --color-red-soft: var(--red-soft);
+  --color-gray: var(--gray);
+  --color-gray-dark: var(--gray-dark);
+  --color-gray-soft: var(--gray-soft);
+  --color-youtube: var(--youtube);
+  --color-instagram: var(--instagram);
+
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --radius-xl2: 1.25rem;
 }
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  font-weight: 600;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--blue-soft);
+}
+
+/* ============================================================
+   Botão 3D — sombra sólida que "afunda" ao clicar
+   ============================================================ */
+.btn3d {
+  --c: var(--green);
+  --c-dark: var(--green-dark);
+  --fg: #fff;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  background: var(--c);
+  color: var(--fg);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 0 var(--c-dark);
+  transition: transform 80ms ease, box-shadow 80ms ease, filter 120ms ease;
+  user-select: none;
+  white-space: nowrap;
+}
+.btn3d:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+.btn3d:active:not(:disabled) {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 var(--c-dark);
+}
+.btn3d:disabled {
+  --c: var(--gray-soft);
+  --c-dark: var(--border);
+  --fg: var(--text-muted);
+  cursor: not-allowed;
+}
+.btn3d:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+.btn3d[data-variant="ghost"] {
+  --c: var(--surface);
+  --c-dark: var(--border);
+  --fg: var(--blue);
+  border: 2px solid var(--border);
+}
+
+/* Card com borda e "base" sólida */
+.card {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 1.25rem;
+}
+.card-pop {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-bottom-width: 4px;
+  border-radius: 1.25rem;
+}
+a.card-pop,
+button.card-pop {
+  transition: transform 100ms ease, border-color 120ms ease;
+}
+a.card-pop:hover,
+button.card-pop:hover {
+  border-color: var(--border-strong);
+}
+a.card-pop:active,
+button.card-pop:active {
+  transform: translateY(2px);
+}
+
+/* Campos */
+.field {
+  width: 100%;
+  border-radius: 0.875rem;
+  border: 2px solid var(--border);
+  background: var(--surface-2);
+  padding: 0.65rem 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: border-color 120ms ease, background 120ms ease;
+}
+.field:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--surface);
+}
+.field::placeholder {
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Etapa atual pulsando */
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ring, var(--green)) 55%, transparent); }
+  80%, 100% { box-shadow: 0 0 0 10px transparent; }
+}
+.pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
+}
+.wiggle:hover {
+  animation: wiggle 400ms ease;
+}
+
+/* Editor de roteiro */
+.prose-script {
+  font-weight: 600;
+  line-height: 1.7;
+}
+.prose-script h1 { font-size: 1.5rem; font-weight: 900; margin: 1rem 0 .5rem; }
+.prose-script h2 { font-size: 1.25rem; font-weight: 800; margin: 1rem 0 .5rem; }
+.prose-script h3 { font-size: 1.05rem; font-weight: 800; margin: .75rem 0 .25rem; }
+.prose-script p { margin: .4rem 0; }
+.prose-script ul { list-style: disc; padding-left: 1.4rem; }
+.prose-script ol { list-style: decimal; padding-left: 1.4rem; }
+.prose-script blockquote { border-left: 4px solid var(--purple); padding-left: .9rem; color: var(--text-muted); }
+.prose-script strong { font-weight: 900; }
+.prose-script mark { background: var(--yellow-soft); color: inherit; border-radius: .25rem; padding: 0 .15rem; }
+.prose-script .ProseMirror { outline: none; min-height: 320px; }
+.prose-script .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--text-muted);
+  pointer-events: none;
+  height: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
